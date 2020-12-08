@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Admin
+{% endblock %}
+
+{% block main %}
+    <h1 class="title">Manage Users</h1>
+    {% if message is defined %}
+    <p>{{message}}</p>
+    {% else %}
+    <form action="/admin" method="post">
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Action</th>
+        </tr>
+        {% for account in accounts %}
+            <tr>
+                <td>{{account["id"]}}</td>
+                <td>{{account["username"]}}</td>
+                {% if account["username"] == "itadmin" %}
+                <td><button type="submit" name="submit" id="{{account["id"]}}" value="{{account["id"]}}" class="btn btn-primary" disabled>Delete</button></td>
+                {% else %}
+                <td><button type="submit" name="submit" id="{{account["id"]}}" value="{{account["id"]}}" class="btn btn-primary">Delete</button></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+    </form>
+    {% endif %}
+{% endblock %}

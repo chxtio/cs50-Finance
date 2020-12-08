@@ -41,6 +41,23 @@ db.execute("PRAGMA foreign_keys = ON;")
 if not os.environ.get("API_KEY"):
     raise RuntimeError("API_KEY not set")
 
+@app.route("/admin", methods=["GET", "POST"])
+@login_required
+def admin():
+    """Show admin panel"""
+    if request.method == "GET":
+        accounts = db.execute("SELECT id, username FROM users ORDER BY id ASC;")
+
+        return render_template("admin.html", accounts=accounts)
+
+    userid = request.form.get("submit")
+    user = db.execute("SELECT username FROM users where id = :id", id = userid)[0]
+    db.execute("DELETE FROM users WHERE id = :id", id = userid)
+
+    flash("Deleted {0} from database".format(user["username"]))
+    accounts = db.execute("SELECT id, username FROM users ORDER BY id ASC;")
+
+    return render_template("admin.html", accounts=accounts)
 
 @app.route("/")
 @login_required
@@ -125,7 +142,7 @@ def buy():
         );
         """)
 
-    date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
     db.execute("""
         INSERT INTO transactions (id, status, symbol, company_name, shares, price, total, date)
         VALUES(?,?,?,?,?,?,?,?)
@@ -321,7 +338,7 @@ def sell():
     sharesLeft = shares - sharesToSell
     cash = user["cash"] + total
 
-    date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
     db.execute("""
         INSERT INTO transactions (id, status, symbol, company_name, shares, price, total, date)
         VALUES(?,?,?,?,?,?,?,?)

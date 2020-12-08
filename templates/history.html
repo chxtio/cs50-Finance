@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block main %}
+    {% if username.endswith("s") %}
+    <h1 class="title">{{username}}' Transaction History</h1>
+    {% else %}
     <h1 class="title">{{username}}'s Transaction History</h1>
+    {% endif %}
     {% if message is defined %}
     <p>{{message}}</p>
     {% else %}

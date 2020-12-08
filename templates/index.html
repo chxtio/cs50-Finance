@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block main %}
+    {% if username.endswith("s") %}
+    <h1 class="title">{{username}}' Stock Portfolio</h1>
+    {% else %}
     <h1 class="title">{{username}}'s Stock Portfolio</h1>
+    {% endif %}
     {% if message is defined %}
     <p>{{message}}</p>
     {% else %}
