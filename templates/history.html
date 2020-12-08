@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <h1 class="title">{{username}}'s Transaction History</h1>
+    {% if message is defined %}
+    <p>{{message}}</p>
+    {% else %}
+    <table class="table table-striped">
+        <tr>
+            <th>Status</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Transacted</th>
+        </tr>
+        {% for row in rows %}
+            <tr>
+                <td>{{row["status"]}}</td>
+                <td>{{row["symbol"]}}</td>
+                <td>{{row["company_name"]}}</td>
+                <td>{{row["shares"]}}</td>
+                <td>{{row["price"]}}</td>
+                <td>{{row["date"]}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}

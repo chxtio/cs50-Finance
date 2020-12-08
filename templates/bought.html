@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Bought
+{% endblock %}
+
+{% block main %}
+   <h2> {{quote["name"]}} </h2>
+
+   <p> ${{ quote["price"] }} </p>
+   <p>Shares requested: {{shares}}</p>
+   <p>Net price: ${{total}}</p>
+   <p>Remaining balance: ${{balance}}</p>
+
+{% endblock %}

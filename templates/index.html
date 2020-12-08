@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    index
+{% endblock %}
+
+{% block main %}
+    <h1 class="title">{{username}}'s Stock Portfolio</h1>
+    {% if message is defined %}
+    <p>{{message}}</p>
+    {% else %}
+    <table class="table table-striped">
+        <tr>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        {% for row in rows %}
+            <tr>
+                <td>{{row["symbol"]}}</td>
+                <td>{{row["company_name"]}}</td>
+                <td>{{row["shares"]}}</td>
+                <td>{{row["price"]}}</td>
+                <td>{{row["total"]}}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>Portfolio Balance</th>
+            <td>{{portfolio}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <th>Available Cash</th>
+            <td>{{cash}}</td>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Grand Total</th>
+            <th>{{grandtotal}}</th>
+        </tr>
+    </table>
+    {% endif %}
+{% endblock %}
