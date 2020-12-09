@@ -140,9 +140,9 @@ def buy():
         price NUMERIC NOT NULL,
         total NUMERIC NOT NULL,
         date TEXT NOT NULL,
-        CONSTRAINT fk_users,
-        FOREIGN KEY(id)
-        REFERENCES users(id)
+        CONSTRAINT fk_users
+            FOREIGN KEY(id)
+                REFERENCES users(id)
         ON DELETE CASCADE
         );
         """)
