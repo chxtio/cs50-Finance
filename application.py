@@ -71,7 +71,7 @@ def index():
 
     userid = session["user_id"]
     stocks = db.execute("""
-        SELECT symbol, company_name, SUM(shares) AS shares, price, SUM(total) AS total
+        SELECT symbol, SUM(shares) AS shares, SUM(total) AS total
         FROM transactions WHERE id = :user_id
         GROUP BY symbol
         HAVING SUM(shares) > 0;
@@ -319,7 +319,7 @@ def sell():
         return apology("Not Found", 403)
 
     stocks = db.execute("""
-        SELECT symbol, company_name, SUM(shares) AS shares, price, SUM(total) AS total
+        SELECT symbol, SUM(shares) AS shares, SUM(total) AS total
         FROM transactions
         WHERE id = :user_id AND symbol = :symbol
         GROUP BY symbol
