@@ -1,5 +1,5 @@
 import os
-
+import psycopg2
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
@@ -34,9 +34,10 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
-#db = SQL("postgres://zriyagbgiacfiy:dabe2938155388de52557e1cd58162a3f43c3351118016bfc9bfcbc736fd9dae@ec2-54-165-164-38.compute-1.amazonaws.com:5432/dbqclifamq7hoo")
-db.execute("PRAGMA foreign_keys = ON;")
+#db = SQL("sqlite:///finance.db")
+db = SQL(os.environ.get("DATABASE_URL") or "sqlite:///finance.db")
+
+#db.execute("PRAGMA foreign_keys = ON;")
 
 # Make sure API key is set
 if not os.environ.get("API_KEY"):
@@ -372,5 +373,5 @@ for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
